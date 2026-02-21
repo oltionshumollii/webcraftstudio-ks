@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebCraft Blog</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --bg:#020617;
+  --card:#020b10;
+  --border:#1E293B;
+  --main:#38BDF8;
+  --text:#CBD5E1;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Poppins, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 6%;
+  background:rgba(2,6,23,.8);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.logo {
+      font-size:1.9rem; font-weight:700;
+      background: linear-gradient(45deg, #00eaff, #0099ff, #00ffee);
+      -webkit-background-clip: text;
+      color:transparent;
+      letter-spacing:1px;
+      cursor:pointer;
+      position: left;
+    }
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:url('hero.png') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  text-align:center;
+}
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.5);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  animation:fadeUp 1.3s ease;
+}
+.hero h1{font-size:3rem;color:#fff}
+.hero p{color:#7DD3FC;margin:12px 0}
+.hero button{
+  padding:14px 28px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,#38BDF8,#0EA5E9);
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1200px;
+  margin:60px auto;
+  padding:0 20px;
+  display:none;
+}
+.container.active{display:block}
+
+/* CATEGORIES */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+}
+.cat{
+  background:var(--card);
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+  cursor:pointer;
+  transition:.4s;
+  border:1px solid var(--border);
+}
+.cat i{font-size:2rem;color:var(--main)}
+.cat:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 30px rgba(56,189,248,.3);
+}
+
+/* POSTS */
+.posts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+}
+.post{
+  background:var(--card);
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.4s;
+}
+.post:hover{transform:scale(1.03)}
+.post img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+.post div{padding:20px}
+
+/* SINGLE POST */
+.single-post img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:20px;
+  margin-bottom:20px;
+}
+.back{
+  color:var(--main);
+  cursor:pointer;
+  margin-bottom:20px;
+  display:inline-block;
+}
+
+/* FOOTER */
+footer{
+  background:#020617;
+  border-top:1px solid var(--border);
+  padding:50px 6%;
+  margin-top:80px;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.social a{
+  color:#94A3B8;
+  margin-right:15px;
+  font-size:20px;
+}
+.social a:hover{color:var(--main)}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.footer{
+  background:#020617;
+  border-top:1px solid #1E293B;
+  padding:60px 6% 30px;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:30px;
+}
+.footer-brand h3{
+  margin:0 0 8px;
+  color:#38BDF8;
+}
+.footer-brand p{
+  margin:0;
+  color:#94A3B8;
+  max-width:420px;
+}
+.footer-social a{
+  margin-right:16px;
+  font-size:22px;
+  color:#94A3B8;
+  transition:.3s;
+}
+.footer-social a:hover{
+  color:#38BDF8;
+  transform:translateY(-4px);
+}
+.footer-bottom{
+  text-align:center;
+  margin-top:40px;
+  font-size:13px;
+  color:#64748B;
+}
+.cta-btn{
+      margin-top:20px;
+      display:inline-block;
+      padding:14px 28px;
+      background:linear-gradient(45deg,#00eaff,#0077ff);
+      border-radius:10px;
+      text-decoration:none;
+      color:white; font-weight:600;
+      transition:0.3s;
+      box-shadow:0 0 15px #00b7ff;
+    }
+    .cta-btn:hover{ transform:scale(1.06); box-shadow:0 0 30px #00d0ff; }
+    /* ===============================
+   COOKIE CONSENT – PRO STYLE
+================================ */
+
+.cookie-box{
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  max-width: 420px;
+  background: rgba(18,18,18,.96);
+  border-radius: 18px;
+  padding: 22px;
+  color: #fff;
+  box-shadow: 0 25px 70px rgba(0,0,0,.65);
+  z-index: 9999;
+  animation: slideUp .6s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes slideUp{
+  from{transform:translateY(150px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
+.cookie-box h4{
+  margin: 0 0 8px;
+}
+
+.cookie-box p{
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: .85;
+}
+
+.cookie-links{
+  margin: 12px 0;
+}
+
+.cookie-links a{
+  color: #00ffd5;
+  margin-right: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cookie-actions{
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.cookie-actions button{
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cookie-actions .accept{
+  background: #00ffd5;
+  color: #000;
+}
+
+.cookie-actions .reject{
+  background: #222;
+  color: #aaa;
+}
+
+/* ===============================
+   POLICY MODAL
+================================ */
+
+.policy-modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.policy-modal.show{
+  display: flex;
+}
+
+.policy-box{
+  background: #111;
+  color: #fff;
+  padding: 30px;
+  max-width: 720px;
+  width: 90%;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+}
+
+.policy-box h2{
+  margin-top: 0;
+}
+
+.policy-box .close{
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  cursor: pointer;
+  font-size: 20px;
+  opacity: .7;
+}
+.no-anim *,
+.no-anim *::before,
+.no-anim *::after{
+  animation: none !important;
+  transition: none !important;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cookie-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+.policy-link {
+  color: #00eaff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.policy-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00eaff, #0077ff);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.policy-link:hover::after {
+  transform: scaleX(1);
+}
+
+.policy-link.download {
+  margin-left: 10px;
+  opacity: 0.85;
+}
+
+/* ===============================
+   SEARCH BAR – PROFESSIONAL PRO
+   POSITION: BOTTOM CENTER
+================================ */
+
+.search-wrapper {
+  position: right;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  background: rgba(0, 20, 30, 0.85);
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 0 25px rgba(0, 200, 255, 0.25),
+    inset 0 0 10px rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.45s cubic-bezier(.4,0,.2,1);
+  z-index: 9999;
+  cursor: pointer;
+}
+
+/* OPEN STATE */
+.search-wrapper.active {
+  width: 420px;
+  transform: translateX(-50%) scale(1);
+  box-shadow:
+    0 0 35px rgba(0, 220, 255, 0.6),
+    0 0 80px rgba(0, 150, 255, 0.35);
+}
+
+/* INPUT */
+.search-wrapper input {
+  width: 0;
+  opacity: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #e9faff;
+  font-size: 1rem;
+  padding: 0;
+  transition: all 0.45s ease;
+  letter-spacing: 0.4px;
+}
+
+/* INPUT OPEN */
+.search-wrapper.active input {
+  width: 100%;
+  opacity: 1;
+  padding: 14px 22px 14px 50px;
+}
+
+/* PLACEHOLDER */
+.search-wrapper input::placeholder {
+  color: rgba(180, 230, 255, 0.6);
+}
+
+/* GLOW WHEN TYPING */
+.search-wrapper.typing {
+  box-shadow:
+    0 0 40px rgba(0, 255, 255, 0.9),
+    0 0 120px rgba(0, 180, 255, 0.6);
+}
+
+/* SEARCH ICON */
+.search-wrapper::before {
+  content: "\f002";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #00eaff;
+  position: absolute;
+  left: 18px;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* ICON HIDE WHEN OPEN */
+.search-wrapper.active::before {
+  opacity: 0;
+}
+
+/* ===============================
+   SEARCH RESULTS DROPDOWN
+================================ */
+
+.search-results {
+  position: d;
+  top: 72px;
+  left: 0;
+  width: 100%;
+  background: rgba(5, 20, 30, 0.97);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  box-shadow:
+    0 0 30px rgba(0, 200, 255, 0.35),
+    inset 0 0 20px rgba(255,255,255,0.04);
+  max-height: 320px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: all 0.35s ease;
+}
+
+/* SHOW RESULTS */
+.search-wrapper.active .search-results {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+
+
+/* RESULT ITEM */
+.search-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.search-item:last-child {
+  border-bottom: none;
+}
+
+.search-item:hover {
+  background: rgba(0, 200, 255, 0.15);
+}
+
+/* TITLE */
+.search-item h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #00eaff;
+}
+
+/* CATEGORY */
+.search-item span {
+  font-size: 0.75rem;
+  color: #7fdfff;
+  opacity: 0.8;
+}
+
+/* NO RESULTS */
+.search-empty {
+  padding: 20px;
+  text-align: center;
+  color: #7fbfd9;
+  font-size: 0.9rem;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .search-wrapper.active {
+    width: 90%;
+  }
+}
+@media (max-height: 700px) {
+  .search-wrapper {
+    bottom: 15px;
+  }
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">WebCraft Blog</div>
+  <div id="searchBox" class="search-wrapper">
+    <input id="searchInput" type="text" placeholder="Kërko artikuj..." />
+    <div id="searchResults" class="search-results"></div>
+  </div>
+  
+  
+  </div>
+  
+  
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>WebCraft Blog</h1>
+    <p>Njohuri, ide dhe analiza nga WebCraftStudio</p>
+    <a href="website.html" class="cta-btn">Kthehu ne Website </a>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="container active" id="categoriesView">
+  <div class="categories" id="categories"></div>
+</div>
+
+<!-- POSTS -->
+<div class="container" id="postsView">
+  <span class="back" onclick="showCategories()">← Kthehu te kategoritë</span>
+  <div class="posts" id="posts"></div>
+</div>
+
+<!-- SINGLE POST -->
+<div class="container" id="postView">
+  <span class="back" onclick="backToPosts()">← Kthehu te postimet</span>
+  <div class="single-post" id="singlePost"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>WebCraft Blog </h3>
+      <p>WebCraftStudio është një studio kreative e fokusuar në dizajn, zhvillim dhe strategji digjitale. Përmes WebCraft Blog ndajmë njohuri, ide dhe analiza për dizajnin, teknologjinë dhe marketingun digjital, duke ndërtuar prezencë digjitale të qëndrueshme dhe profesionale.</p>
+    </div>
+
+    <div class="footer-social">
+      <a href="https://facebook.com/webcraftstudioks" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/webcraftstudio.ks" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://tiktok.com/@webcraftstudio.ks" target="_blank"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 WebCraft Blog by WebCraftStudio · All rights reserved
+    3.0
+  </div>
+</footer>
+<div id="cookieBox" class="cookie-box">
+  <h4>🍪 Cookies & Privacy</h4>
+  <p>
+    Ne përdorim cookies për të siguruar funksionimin korrekt të faqes, për të përmirësuar përvojën tuaj dhe për të analizuar performancën e përmbajtjes.
+
+Ju mund të zgjidhni nëse dëshironi t’i pranoni apo refuzoni cookies jo-thelbësore. Refuzimi i cookies mund të ndikojë në disa funksione vizuale dhe animacione të faqes.
+  </p>
+
+  <div class="cookie-links">
+    <a onclick="openPolicy('privacy')">Privacy Policy</a>
+    <a onclick="openPolicy('terms')">Terms & Conditions</a>
+  </div>
+
+  <div class="cookie-actions">
+    <button class="reject" onclick="rejectCookies()">Refuzo</button>
+    <button class="accept" onclick="acceptCookies()">Prano</button>
+  </div>
+</div>
+
+<!-- POLICY MODAL -->
+<div id="policyModal" class="policy-modal">
+  <div class="policy-box">
+    <span class="close" onclick="closePolicy()">✕</span>
+    <div id="policyContent"></div>
+  </div>
+</div>
+
+<script>
+  // ================= COOKIE =================
+  const cookieBox = document.getElementById("cookieBox");
+  
+  function acceptCookies(){
+    cookieBox.remove();
+  }
+  
+  function rejectCookies(){
+    cookieBox.remove();
+    disableAnimations();
+  }
+  
+  function disableAnimations(){
+    document.body.classList.add("no-anim");
+  }
+  
+  function openPolicy(type){
+    const modal = document.getElementById("policyModal");
+    const content = document.getElementById("policyContent");
+  
+    if(type === "privacy"){
+      content.innerHTML = `
+        <h2>Privacy Policy</h2>
+        <p>
+  👉 <a href="Privacy_policy.pdf" target="_blank" class="policy-link">Lexo Privacy Policy</a><br>
+  👉 <a href="Privacy_policy.pdf" download class="policy-link download">Shkarko dokumentin</a>
+        </p>`;
+    }
+  
+    if(type === "terms"){
+      content.innerHTML = `
+        <h2>Terms & Conditions</h2>
+        <p>
+  👉 <a href="Terms_Conditions.pdf" target="_blank" class="policy-link">Lexo Terms</a><br>
+  👉 <a href="Terms_Conditions.pdf" download class="policy-link download">Shkarko dokumentin</a>
+        </p>`;
+    }
+  
+    modal.classList.add("show");
+  }
+  
+  function closePolicy(){
+    document.getElementById("policyModal").classList.remove("show");
+  }
+  
+  
+  // ================= DATA =================
+  const categories=[
+   {id:"web",name:"Web Design & Dev",icon:"fa-code"},
+   {id:"graphic",name:"Graphic Design",icon:"fa-palette"},
+   {id:"marketing",name:"Marketing",icon:"fa-bullhorn"},
+   {id:"tech",name:"Tech & AI",icon:"fa-robot"},
+   {id:"insp",name:"Inspiration",icon:"fa-lightbulb"}
+  ];
+  
+  const posts=[
+   {cat:"web",title:"Pse një Web Design i Mirë Nuk Është Vetëm Çështje Bukurie",
+   text:`Shumë njerëz mendojnë se web design do të thotë thjesht “me duk bukur”. Në realitet, një faqe e bukur që nuk funksionon mirë është një mundësi e humbur. Web design-i i mirë është kombinim i estetikës, funksionalitetit dhe përvojës së përdoruesit.
+Kur një vizitor hyn në një faqe, ai vendos brenda pak sekondash nëse do të qëndrojë apo do të largohet. Ngarkimi i shpejtë, struktura e qartë dhe navigimi i lehtë janë po aq të rëndësishme sa ngjyrat apo animacionet. Nëse përdoruesi ngatërrohet, lodhet ose nuk e gjen shpejt atë që kërkon – faqja ka dështuar.
+Një web design profesional është ndërtuar me qëllim. Çdo seksion ka arsye pse ekziston, çdo buton ka rol, çdo animacion është i menduar që të ndihmojë përdoruesin, jo ta shpërqendrojë. Dizajni nuk është dekor – është mjet komunikimi.
+Në WebCraft Studio, ne e shohim web design-in si një strategji. Faqja duhet të tregojë historinë e brand-it, të ndërtojë besim dhe të udhëheqë vizitorin drejt veprimit. Një website i mirë nuk është vetëm i bukur për syrin, por i zgjuar në funksion.`,
+   img:"blog/01.png"},
+  
+   {cat:"web",title:"Nga Ideja te Website-i Final: Si Ndërtohet një Faqe Moderne",
+   text:`Çdo website i suksesshëm fillon me një ide të qartë. Para se të shkruhet një rresht kodi apo të zgjidhen ngjyrat, duhet të dihet qëllimi i faqes: informim, shitje, prezantim apo ndërtim imazhi.
+Procesi zakonisht fillon me strukturën. HTML krijon bazën e faqes – seksionet, titujt, tekstin dhe elementet kryesore. Pa një strukturë të pastër, edhe dizajni më i bukur humbet vlerë.
+Më pas vjen CSS, që i jep jetë faqes. Ngjyrat, fontet, layout-i dhe responsive design janë thelbësore për ta bërë website-in të duket profesional në çdo pajisje – nga telefoni deri te monitorët e mëdhenj.
+JavaScript është ajo që e bën faqen interaktive. Animacionet, menutë dinamike, efektet vizuale dhe ndërveprimi me përdoruesin realizohen pikërisht këtu. Kur përdoret me masë dhe zgjuarsi, JavaScript e rrit ndjeshëm përvojën e përdoruesit.
+Një faqe moderne nuk është vetëm teknike – është përvojë. Ajo duhet të ndihet e lehtë, e shpejtë dhe intuitive. Në WebCraft, çdo projekt ndërtohet duke menduar për përdoruesin final, sepse një website i mirë nuk shihet vetëm – përjetohet.`,
+   img:"blog/02.png"},
+  
+   {cat:"tech",title:"Teknologjia dhe Kreativiteti: Një Bashkëpunim i Pafund",
+   text:`Shumë mendojnë se teknologjia kufizon kreativitetin. Por në realitet, ajo e fuqizon atë. Mjetet digjitale dhe AI po hapin mundësi që më parë ishin të pamundura për dizajnerët, developerët dhe krijuesit e përmbajtjes.
+Në dizajn, AI mund të sugjerojë kombinime ngjyrash, fontesh ose kompozime që i përshtaten identitetit të brand-it. Në marketing, AI mund të krijojë draftet e parë të postimeve, analiza të sjelljes së audiencës dhe sugjerime për optimizim. Kjo kursen kohë dhe rrit efikasitetin, duke lënë hapësirë për kreativitetin njerëzor.
+Por fuqia e vërtetë e teknologjisë shfaqet kur bashkëpunon me kreativitetin. Ideja e thjeshtë e një dizajni, kur kombinohet me mjetet digjitale, mund të bëhet një faqe interactive, një logo dinamike apo një fushatë marketingu që godet publikun me saktësi.
+Teknologjia nuk është zëvendësim i aftësive njerëzore – është amplifikator. Një dizajn i bukur mbetet i bukur vetëm nëse është menduar me strategji; një postim viral nuk ndodh pa vizion. AI dhe mjetet moderne thjesht e bëjnë procesin më të shpejtë, më të saktë dhe më të fuqishëm.
+Në WebCraft Studio, ne e shohim teknologjinë si aleat të kreativitetit. Çdo projekt fillon me ide njerëzore dhe zhvillohet me teknologji që e çon në nivelin më të lartë. Kjo është filozofia jonë: kreativitet i fuqizuar nga inteligjenca digjitale.`,
+   img:"blog/03.png "},
+
+   {cat:"tech",title:"Si AI Po Transformon Botën Digjitale dhe Biznesin Online",
+   text:`Artificial Intelligence nuk është më e ardhmja – është tashmë pjesë e përditshme e botës digjitale. Nga dizajni tek marketingu, AI po revolucionon mënyrën se si krijojmë, menaxhojmë dhe komunikojmë online.
+Në web design, AI mund të analizojë sjelljen e vizitorëve, të sugjerojë ndryshime në layout dhe të optimizojë eksperiencën e përdoruesit në kohë reale. Për shembull, një faqja mund të ndryshojë strukturën ose të rekomandojë produkte bazuar në interaktivitetin e përdoruesit. Kjo sjell rritje të konvertimit dhe përvojë më të personalizuar.
+Në marketing, AI ndihmon në targetim më të saktë të audiencës. Analizat e të dhënave, segmentimi i klientëve dhe automatizimi i postimeve në rrjetet sociale bëjnë që çdo fushatë të ketë impakt maksimal. AI nuk është zëvendësim i kreativitetit njerëzor, por një aleat që e fuqizon atë duke kursyer kohë dhe burime.
+Për biznese të vogla dhe startup-e, AI është një mundësi e jashtëzakonshme. Me mjetet e duhura, edhe një ekip i vogël mund të krijojë përmbajtje, të analizojë performancë dhe të optimizojë strategji pa nevojën e një departamenti të madh teknologjik.
+Në WebCraft Studio, ne shfrytëzojmë AI si partner strategjik për të ndërtuar website, dizajne, marketing digjital dhe analiza të avancuara. E ardhmja është inteligjente – dhe ne duam që klientët tanë të jenë pjesë e saj.`,
+   img:"blog/04.png "},
+
+   {cat:"graphic",title:"Logoja Nuk Është Thjesht Simbol – Është Identitet",
+   text:`Logoja është pika e parë e kontaktit mes një brand-i dhe audiencës. Para se dikush ta lexojë emrin, ta vizitojë website-in apo ta njohë shërbimin, ai e sheh logon. Pikërisht për këtë arsye, logoja nuk duhet trajtuar si dekor, por si pjesë strategjike e identitetit të biznesit.
+Një logo e mirë përcjell mesazh pa fjalë. Ajo tregon profesionalizëm, seriozitet dhe karakter. Forma, ngjyra dhe tipografia ndikojnë drejtpërdrejt në mënyrën se si njerëzit e perceptojnë një brand. Një logo e dobët ose e pa menduar mirë mund të krijojë konfuzion ose mosbesim, edhe nëse shërbimi është i shkëlqyer.
+Procesi i krijimit të logos nuk fillon me dizajnin, por me analizën. Duhet kuptuar industria, audienca, vlerat dhe qëllimi i brand-it. Vetëm pasi këto elemente janë të qarta, dizajni merr formë. Logoja duhet të funksionojë njësoj mirë në website, rrjete sociale, dokumente zyrtare dhe materiale promovuese.
+Në WebCraft Studio, ne e shohim logon si bazën e gjithë identitetit vizual. Ajo nuk krijohet për t’u dukur bukur sot, por për të qenë relevante edhe pas disa vitesh. Një logo e suksesshme është e thjeshtë, e dallueshme dhe e qëndrueshme në kohë.`,
+   img:"blog/05.png "},
+
+  {cat:"graphic",title:"Pse Konsistenca Vizuale Është Çelësi i një Brand-i të Fortë",
+   text:`Një nga gabimet më të shpeshta që bëjnë bizneset është mungesa e konsistencës vizuale. Logo e bukur, por postime të ndryshme. Website profesional, por rrjete sociale pa stil të qartë. Kjo e dobëson imazhin e brand-it dhe krijon pasiguri te audienca.
+Konsistenca vizuale nënkupton përdorimin e një palete ngjyrash të njëjtë, fontesh të njëjta dhe stil grafik të unifikuar në çdo platformë. Kur një brand duket i njëjtë kudo, ai bëhet i njohshëm dhe i besueshëm. Audienca fillon ta identifikojë menjëherë, edhe pa e lexuar emrin.
+Dizajni konsistent krijon ndjesinë e profesionalizmit dhe organizimit. Ai tregon që brand-i e di çfarë po bën dhe e merr seriozisht prezencën e tij vizuale. Në një treg të mbushur me zhurmë vizuale, kjo bën diferencën.
+Në WebCraft Studio, ne ndërtojmë identitete vizuale që kanë rregulla të qarta: si përdoret logoja, cilat ngjyra lejohen, çfarë fontesh përdoren dhe si strukturohen materialet grafike. Kjo siguron që brand-i të mbetet i fortë dhe i qëndrueshëm në çdo hap.
+Një brand i fortë nuk ndërtohet me një dizajn të vetëm, por me një gjuhë vizuale të vazhdueshme që flet qartë dhe me besim.`,
+   img:"blog/06.png"},
+
+   {cat:"marketing",title:"Marketingu Digjital: Themeli i Çdo Biznesi Modern",
+   text:`Asnjë projekt nuk ka nisur i madh. Çdo faqe web, çdo logo apo brand që shohim sot ka filluar si një ide e vogël – ndonjëherë vetëm një vizion në mendjen e krijuesit. Rëndësi ka guximi për të filluar.
+Shumë herë njerëzit e ndalojnë vetveten për shkak të pasigurisë, frikës nga dështimi ose pritjeve të paqarta. Por secili hap, madje edhe i vogël, të afrohet më pranë realizimit të vizionit. Çdo gabim është mundësi për mësim; çdo provë është një hap drejt eksperiencës dhe rritjes.
+Krijimi nuk ka të bëjë vetëm me talent – ka të bëjë me veprim. Një ide mbetet vetëm një ëndërr deri në momentin kur ti vendos ta bësh realitet. Në botën digjitale, ku gjithçka lëviz shpejt, veprim i mençur dhe i qëllimshëm është çelësi për sukses.
+Në WebCraft Studio, ne besojmë tek fuqia e hapat të vegjël të vazhdueshëm. Çdo projekt fillon nga një ide e thjeshtë dhe zhvillohet në një produkt që shkëlqen online, duke i dhënë klientit një histori që mund ta tregojë me krenari.`,
+   img:"blog/07.png "},
+
+   {cat:"marketing",title:"Përmbajtja që Shet: Si të Ndërtosh Besim Para Se të Kërkosh Shitje",
+   text:`Shumë biznese gabojnë duke tentuar të shesin menjëherë. Por në botën digjitale, njerëzit blejnë vetëm nga ata që u besojnë. Pikërisht këtu hyn fuqia e përmbajtjes cilësore.
+Content marketing nuk ka të bëjë me postime të shpeshta, por me postime të mençura. Çdo tekst, foto apo video duhet të ketë qëllim: të edukojë, të inspirojë ose të zgjidhë një problem real të audiencës. Kur përmbajtja ka vlerë, audienca kthehet përsëri.
+Një përmbajtje e mirë flet me gjuhën e klientit. Ajo nuk është teknike pa nevojë, as e ftohtë. Është njerëzore, e qartë dhe autentike. Brand-et që flasin sinqerisht ndërtojnë lidhje emocionale – dhe kjo është forma më e fortë e marketingut.
+Rrjetet sociale janë kanali ideal për këtë lloj komunikimi, por vetëm nëse përdoren me strategji. Konsistenca, stili vizual dhe mesazhi i qartë janë kyç. Pa to, edhe postimi më i mirë humbet në feed.
+Në WebCraft Studio, ne krijojmë përmbajtje që nuk duket si reklamë, por që punon si marketing. Sepse kur besimi ndërtohet, shitja vjen vetë.`,
+   img:"blog/08.png "},
+
+   {cat:"insp",title:"Çdo Ide e Madhe Fillon nga Një Hapat i Parë",
+   text:`Asnjë projekt nuk ka nisur i madh. Çdo faqe web, çdo logo apo brand që shohim sot ka filluar si një ide e vogël – ndonjëherë vetëm një vizion në mendjen e krijuesit. Rëndësi ka guximi për të filluar.
+Shumë herë njerëzit e ndalojnë vetveten për shkak të pasigurisë, frikës nga dështimi ose pritjeve të paqarta. Por secili hap, madje edhe i vogël, të afrohet më pranë realizimit të vizionit. Çdo gabim është mundësi për mësim; çdo provë është një hap drejt eksperiencës dhe rritjes.
+Krijimi nuk ka të bëjë vetëm me talent – ka të bëjë me veprim. Një ide mbetet vetëm një ëndërr deri në momentin kur ti vendos ta bësh realitet. Në botën digjitale, ku gjithçka lëviz shpejt, veprim i mençur dhe i qëllimshëm është çelësi për sukses.
+Në WebCraft Studio, ne besojmë tek fuqia e hapat të vegjël të vazhdueshëm. Çdo projekt fillon nga një ide e thjeshtë dhe zhvillohet në një produkt që shkëlqen online, duke i dhënë klientit një histori që mund ta tregojë me krenari.`,
+   img:"blog/09.png "},
+
+   {cat:"insp",title:"Prezenca Online është Fuqi – Shkëlqe Kudo që Je",
+   text:`Në botën digjitale, mënyra si paraqitesh është po aq e rëndësishme sa ajo që ofron. Website, dizajn, postime në rrjete sociale dhe përmbajtje cilësore tregojnë historinë tënde pa folur. Prezenca online nuk është luks, është fuqia që të bën të dallohesh.
+Një prezencë e fortë krijon mundësi: klientët të gjejnë, të kuptojnë vlerën tënde dhe të ndërveprojnë. Një brand që duket i qartë, i organizuar dhe inovativ krijon besim menjëherë. Çdo detaj ka rëndësi: nga logoja, tek fonti, tek ngjyrat, tek mënyra se si prezantohen postimet.
+Por prezenca nuk është vetëm estetike – është strategji. Është bashkimi i kreativitetit dhe teknologjisë për të ndërtuar një histori që flet, për të krijuar lidhje dhe për të lënë gjurmë. Një prezencë e fortë nuk humbet në kaosin e internetit; ajo shkëlqen.
+Në WebCraft Studio, ne punojmë për t’i dhënë çdo klienti fuqinë e prezencës së plotë online. Kudo që jeni, biznes i vogël apo startup, shkëlqimi është i mundur. Sepse prezenca e mirë nuk është rastësi – është strategji, dizajn dhe pasion i bashkuar në një paketë të vetme.`,
+   img:"blog/10.png "},
+  ];
+  
+  
+  // ================= LOGIC =================
+  const catView=document.getElementById("categoriesView");
+  const postView=document.getElementById("postsView");
+  const singleView=document.getElementById("postView");
+  
+  const catBox=document.getElementById("categories");
+  const postsBox=document.getElementById("posts");
+  const singleBox=document.getElementById("singlePost");
+  
+  let currentCategory=null;
+  
+  categories.forEach(c=>{
+    catBox.innerHTML+=`
+     <div class="cat" onclick="openCategory('${c.id}')">
+       <i class="fa ${c.icon}"></i>
+       <h3>${c.name}</h3>
+     </div>`;
+  });
+  
+  function showCategories(){
+    catView.classList.add("active");
+    postView.classList.remove("active");
+    singleView.classList.remove("active");
+  }
+  
+  function openCategory(cat){
+    currentCategory=cat;
+    postsBox.innerHTML="";
+    posts.filter(p=>p.cat===cat).forEach(p=>{
+      postsBox.innerHTML+=`
+       <div class="post" onclick="openPost('${p.title}')">
+         <img src="${p.img}">
+         <div><h3>${p.title}</h3></div>
+       </div>`;
+    });
+    catView.classList.remove("active");
+    postView.classList.add("active");
+  }
+  
+  
+  // ⭐⭐⭐ FIX I TEKSTIT ⭐⭐⭐
+  function openPost(title){
+    const p=posts.find(x=>x.title===title);
+  
+    let formattedText = p.text
+        .replace(/\n/g,"<br><br>")
+        .replace(/  +/g," ");
+  
+    singleBox.innerHTML=`
+      <img src="${p.img}">
+      <h2 style="margin-top:10px">${p.title}</h2>
+      <p style="line-height:1.8;font-size:16px;margin-top:15px">
+        ${formattedText}
+      </p>`;
+  
+    postView.classList.remove("active");
+    singleView.classList.add("active");
+  }
+  
+  function backToPosts(){
+    singleView.classList.remove("active");
+    postView.classList.add("active");
+  }
+  
+  
+  // ================= SEARCH =================
+  const searchBox=document.getElementById("searchBox");
+  const searchInput=document.getElementById("searchInput");
+  const searchResults=document.getElementById("searchResults");
+  
+  searchBox.addEventListener("click",(e)=>{
+    e.stopPropagation();
+    searchBox.classList.add("active");
+    searchInput.focus();
+  });
+  
+  document.addEventListener("click",()=>{
+    searchBox.classList.remove("active");
+    searchResults.innerHTML="";
+    searchInput.value="";
+  });
+  
+  searchInput.addEventListener("input",()=>{
+    const q=searchInput.value.toLowerCase().trim();
+    searchResults.innerHTML="";
+    if(q.length<2) return;
+  
+    const results=posts.filter(p=>
+      p.title.toLowerCase().includes(q) ||
+      p.text.toLowerCase().includes(q)
+    );
+  
+    if(results.length===0){
+      searchResults.innerHTML=`<div class="search-empty">Asnjë artikull nuk u gjet</div>`;
+      return;
+    }
+  
+    results.forEach(p=>{
+      const catName=categories.find(c=>c.id===p.cat)?.name||"";
+  
+      const item=document.createElement("div");
+      item.className="search-item";
+      item.innerHTML=`<strong>${p.title}</strong><span>${catName}</span>`;
+  
+      item.onclick=()=>{
+        openCategory(p.cat);
+        setTimeout(()=>openPost(p.title),50);
+        searchBox.classList.remove("active");
+        searchResults.innerHTML="";
+        searchInput.value="";
+      };
+  
+      searchResults.appendChild(item);
+    });
+  });
+  
+  searchInput.addEventListener("input",()=>{
+    searchBox.classList.toggle("typing",searchInput.value.length>0);
+  });
+  </script>
+  
+  
+</body>
+</html>
