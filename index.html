@@ -714,15 +714,22 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// COOKIE – SHFAQET GJITHMONË PAS REFRESH
+// COOKIE – SHFAQET VETËM NËSE NUK KA VENDIM
 const cookieBox = document.getElementById("cookieBox");
+const cookieConsent = localStorage.getItem("cookieConsent");
+
+if (cookieConsent === "accepted" || cookieConsent === "rejected") {
+    cookieBox.style.display = "none"; // fsheh cookie box nëse është vendosur vendimi
+}
 
 // ACCEPT / REJECT
 function acceptCookies(){
+  localStorage.setItem("cookieConsent", "accepted"); // ruan vendimin
   cookieBox.remove();
 }
 
 function rejectCookies(){
+  localStorage.setItem("cookieConsent", "rejected"); // ruan vendimin
   cookieBox.remove();
   disableAnimations();
 }
@@ -784,3 +791,4 @@ function closePolicy(){
 
 </body>
 </html>
+
