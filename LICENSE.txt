@@ -1,1 +1,59 @@
+WebCraftStudio Custom License (2026)
 
+Copyright (c) 2026 Oltion Shumolli – WebCraftStudio
+
+All Rights Reserved
+
+1. License Grant / Dhënia e Licencës
+
+WebCraftStudio grants the client a limited, non-transferable, non-sublicensable license to use the website, assets, and design for their own personal or business purposes only, as agreed upon in the project.
+
+WebCraftStudio i jep klientit një licencë të kufizuar, jo-transferueshme dhe jo-sublicensueshme për të përdorur website-in, asetet dhe dizajnin vetëm për qëllimet e veta personale ose të biznesit, siç është rënë dakord në projekt.
+
+2. Prohibited Actions / Veprimet e Ndaluara
+
+Without explicit permission from WebCraftStudio, the client, or any third party, may NOT:
+
+Copy, reproduce, distribute, or publicly display any part of the website, assets, or design.
+
+Sell, resell, or license the website, templates, code, or graphics.
+
+Claim authorship or ownership of the website design or code.
+
+Use the website, code, or assets to create derivative works for commercial purposes for third parties.
+
+Pa leje të qartë nga WebCraftStudio, klienti ose ndonjë palë e tretë nuk guxon të:
+
+Kopjojë, riprodhojë, shpërndajë ose ekspozojë publikisht ndonjë pjesë të website-it, asetet ose dizajnin.
+
+Shesë, rivendosë, ose licencojë website-in, template-t, kodin ose grafikët.
+
+Pretendojë autorësinë ose pronësinë mbi dizajnin ose kodin e website-it.
+
+Përdorë website-in, kodin ose asetet për të krijuar punime të derivuara për qëllime komerciale për palë të treta.
+
+3. Ownership / Pronësia
+
+All website content, code, graphics, and designs remain the exclusive property of WebCraftStudio and Oltion Shumolli, unless otherwise agreed in writing.
+
+Gjithçka që lidhet me website-in, kodin, grafikët dhe dizajnin mbetet pronësi ekskluzive e WebCraftStudio dhe Oltion Shumolli, përveç nëse është rënë dakord ndryshe me shkrim.
+
+4. Termination / Ndërprerja
+
+Violation of this license automatically terminates the client’s right to use the website and all associated materials. WebCraftStudio reserves the right to pursue legal action against unauthorized use.
+
+Shkelja e kësaj license ndërpret automatikisht të drejtën e klientit për të përdorur website-in dhe të gjitha materialet e lidhura. WebCraftStudio rezervon të drejtën për të ndërmarrë veprime ligjore kundër përdorimit të paautorizuar.
+
+5. Warranty Disclaimer / Përjashtim i Garancisë
+
+The website and its content are provided “as is” without warranty of any kind. WebCraftStudio is not responsible for indirect, incidental, or consequential damages.
+
+Website-i dhe përmbajtja e tij ofrohen “as is” pa garanci. WebCraftStudio nuk është përgjegjës për dëmtime të drejtpërdrejta, të tërthorta ose pasojore.
+
+6. Governing Law / Ligji Ndërmjetësues
+
+This license shall be governed by the laws of the Republic of Kosovo.
+
+Kjo licencë rregullohet nga ligjet e Republikës së Kosovës.
+
+By using the website, you agree to comply with this license. / Duke përdorur website-in, ju pranoni të respektoni këtë licencë.
