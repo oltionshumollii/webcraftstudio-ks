@@ -632,51 +632,78 @@ Ju mund të zgjidhni nëse dëshironi t’i pranoni apo refuzoni cookies jo-thel
 
 <script>
   // ================= COOKIE =================
-  const cookieBox = document.getElementById("cookieBox");
-  
-  function acceptCookies(){
-    cookieBox.remove();
+// COOKIE – SHFAQET VETËM NËSE NUK KA VENDIM
+const cookieBox = document.getElementById("cookieBox");
+const cookieConsent = localStorage.getItem("cookieConsent");
+
+if (cookieConsent === "accepted" || cookieConsent === "rejected") {
+    cookieBox.style.display = "none"; // fsheh cookie box nëse është vendosur vendimi
+}
+
+// ACCEPT / REJECT
+function acceptCookies(){
+  localStorage.setItem("cookieConsent", "accepted"); // ruan vendimin
+  cookieBox.remove();
+}
+
+function rejectCookies(){
+  localStorage.setItem("cookieConsent", "rejected"); // ruan vendimin
+  cookieBox.remove();
+  disableAnimations();
+}
+
+// DISABLE ANIMATIONS IF REJECTED
+function disableAnimations(){
+  document.body.classList.add("no-anim");
+}
+
+// POLICY MODAL
+function openPolicy(type){
+  const modal = document.getElementById("policyModal");
+  const content = document.getElementById("policyContent");
+
+  if(type === "privacy"){
+    content.innerHTML = `
+      <h2>Privacy Policy</h2>
+      <p>
+        Për më shumë detaje mbi mënyrën se si trajtohen të dhënat tuaja personale, mund të lexoni dokumentin tonë zyrtar:
+
+👉
+<a href="Privacy_policy.pdf" target="_blank" class="policy-link">
+Lexo Privacy Policy
+</a>
+ose
+<a href="Privacy_policy.pdf" download class="policy-link download">
+Shkarko dokumentin
+</a>
+      </p>
+    `;
   }
-  
-  function rejectCookies(){
-    cookieBox.remove();
-    disableAnimations();
+
+  if(type === "terms"){
+    content.innerHTML = `
+      <h2>Terms & Conditions</h2>
+      <p>
+        Kushtet e përdorimit janë të detyrueshme për të gjithë përdoruesit e faqes:
+
+👉
+<a href="Terms_Conditions.pdf" target="_blank" class="policy-link">
+Lexo Terms & Conditions
+</a>
+ose
+<a href="Terms_Conditions.pdf" download class="policy-link download">
+Shkarko dokumentin
+</a>
+      </p>
+    `;
   }
-  
-  function disableAnimations(){
-    document.body.classList.add("no-anim");
-  }
-  
-  function openPolicy(type){
-    const modal = document.getElementById("policyModal");
-    const content = document.getElementById("policyContent");
-  
-    if(type === "privacy"){
-      content.innerHTML = `
-        <h2>Privacy Policy</h2>
-        <p>
-  👉 <a href="Privacy_policy.pdf" target="_blank" class="policy-link">Lexo Privacy Policy</a><br>
-  👉 <a href="Privacy_policy.pdf" download class="policy-link download">Shkarko dokumentin</a>
-        </p>`;
-    }
-  
-    if(type === "terms"){
-      content.innerHTML = `
-        <h2>Terms & Conditions</h2>
-        <p>
-  👉 <a href="Terms_Conditions.pdf" target="_blank" class="policy-link">Lexo Terms</a><br>
-  👉 <a href="Terms_Conditions.pdf" download class="policy-link download">Shkarko dokumentin</a>
-        </p>`;
-    }
-  
-    modal.classList.add("show");
-  }
-  
-  function closePolicy(){
-    document.getElementById("policyModal").classList.remove("show");
-  }
-  
-  
+
+  modal.classList.add("show");
+}
+
+function closePolicy(){
+  document.getElementById("policyModal").classList.remove("show");
+}
   // ================= DATA =================
   const categories=[
    {id:"web",name:"Web Design & Dev",icon:"fa-code"},
@@ -888,4 +915,5 @@ Në WebCraft Studio, ne punojmë për t’i dhënë çdo klienti fuqinë e preze
   
 </body>
 </html>
+
 
